@@ -1,44 +1,90 @@
-class Book {
-  String _title;
-  String _author;
-  double _rating;
-  Book(this._title, this._author) : _rating = 0.0;
-  Book.withRating(this._title, this._author, double rating) : _rating = 0.0 {
-    this.rating = rating;
-  }
-  String get title => _title;
-  String get author => _author;
-  double get rating => _rating;
-  set rating(double newRating) {
-    if (newRating >= 0 && newRating <= 10) {
-      _rating = newRating;
-    } else {
-      print('Ошибка: Рейтинг для книги "$_title" должен быть от 0 до 10! Оставлено текущее значение: $_rating');
-    }
-  }
-  void displayInfo() {
-    print('Title: $_title');
-    print('Author: $_author');
-    print('Rating: $_rating');
+abstract class Switchable {
+  void turnOn();
+  void turnOff();
+}
+
+abstract class Adjustable {
+  void increase();
+  void decrease();
+}
+
+mixin BatteryPowered {
+  int batteryLevel = 100;
+  void showBattery() {
+    print('Battery level: $batteryLevel%');
   }
 }
-class Library {
-  String name;
-  final List<Book> _books = [];
-  Library(this.name);
-  List<Book> get books => _books;
-  void addBook(Book b) {
-    _books.add(b);
+
+abstract class Device implements Switchable {
+  final String name;
+  Device(this.name);
+  void showInfo() {
+    print('Device: $name');
   }
-  void showBooks() {
-    print('Library: $name');
-    print('Books list:');
-    if (_books.isEmpty) {
-      print('Библиотека пуста.');
-      return;
-    }
-    for (int i = 0; i < _books.length; i++) {
-      print('${i + 1}. ${_books[i].title} (Author: ${_books[i].author}, Rating: ${_books[i].rating})');
-    }
+}
+
+class SmartLamp extends Device with BatteryPowered implements Adjustable {
+  int brightness = 50;
+
+  SmartLamp(String name) : super(name);
+
+  @override
+  void turnOn() {
+    print('Lamp $name is ON');
+  }
+
+  @override
+  void turnOff() {
+    print('Lamp $name is OFF');
+  }
+
+  @override
+  void increase() {
+    brightness += 10;
+    if (brightness > 100) brightness = 100;
+  }
+
+  @override
+  void decrease() {
+    brightness -= 10;
+    if (brightness < 0) brightness = 0;
+  }
+
+  @override
+  void showInfo() {
+    print('Device: $name, Brightness: $brightness%');
+  }
+}
+
+class SmartSpeaker extends Device with BatteryPowered implements Adjustable {
+  int volume = 30;
+
+  SmartSpeaker(String name) : super(name);
+
+  @override
+  void turnOn() {
+    print('Speaker $name is ON');
+  }
+
+  @override
+  void turnOff() {
+    print('Speaker $name is OFF');
+  }
+
+  @override
+  void increase() {
+    volume += 5;
+    if (volume > 100) volume = 100;
+  }
+
+  @override
+  void decrease() {
+    volume -= 5;
+    if (volume < 0) volume = 0;
+  }
+
+  @override
+  void showInfo() {
+    print('Device: $name, Volume: $volume%');
   }
 }
