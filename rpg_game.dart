@@ -13,16 +13,15 @@ class RpgGame {
     Medic assistant = Medic(300, 5, 'Max', 5);
     Berserk berserk = Berserk(260, 10, 'Alex');
     Magic magic = Magic(290, 10, 'Strange');
-    
-
     Golem golem = Golem(450, 5, 'Rock');
     Lucky lucky = Lucky(240, 12, 'Clover');
     Witcher witcher = Witcher(250, 0, 'Geralt');
     Thor thor = Thor(260, 15, 'Odin');
+    Ludoman ludoman = Ludoman(260, 10, 'Askhab');
 
     List<Hero> heroes = [
       warrior1, doc, berserk, assistant, magic, warrior2, 
-      golem, lucky, witcher, thor
+      golem, lucky, witcher, thor, ludoman
     ];
     
     printStatistics(boss, heroes);
